@@ -1,3 +1,6 @@
+#include <cmath>
+#include "cstats.h"
+
 
 void sortArray(double arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
@@ -89,4 +92,21 @@ int count(const double data[], int n) {
         return n;
     else
         return 0;
+}
+
+double variance(const double data[], int n) {
+    if (n <= 0) return 0.0;
+
+    double m = mean(data, n);
+    double var = 0.0;
+
+    for (int i = 0; i < n; i++) {
+        var += (data[i] - m) * (data[i] - m);
+    }
+
+    return var / n;
+}
+
+double stdev(const double data[], int n) {
+    return sqrt(variance(data, n));
 }
