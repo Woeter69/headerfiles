@@ -1,7 +1,8 @@
 #include <cmath>
-#include <cstdio>
+#include <iostream>
 #include "cstats.h"
 
+using namespace std;
 
 void sortArray(double arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
@@ -132,19 +133,6 @@ double quartile1(double data[], int n) {
 
 double quartile3(double data[], int n) {
     return percentile(data, n, 75.0);
-}
-
-double iqr(double data[], int n) {
-    if (n <= 0) return 0.0;
-    double* temp = new double[n];
-    for (int i = 0; i < n; i++) temp[i] = data[i];
-    
-    double q1 = quartile1(temp, n);
-    for (int i = 0; i < n; i++) temp[i] = data[i];
-    double q3 = quartile3(temp, n);
-    
-    delete[] temp;
-    return q3 - q1;
 }
 
 double sampleVariance(const double data[], int n) {
@@ -290,30 +278,20 @@ void copyArray(const double src[], double dest[], int n) {
     }
 }
 
-void printSummaryStats(const double data[], int n) {
+void printSummaryStats(double data[], int n) {
     if (n <= 0) {
-        printf("No data available\n");
+        cout << "No data available\n";
         return;
     }
     
-    double* temp = new double[n];
-    copyArray(data, temp, n);
-    
-    printf("=== Summary Statistics ===\n");
-    printf("Count:    %d\n", n);
-    printf("Mean:     %.4f\n", mean(data, n));
-    printf("Median:   %.4f\n", median(temp, n));
-    printf("Std Dev:  %.4f\n", stdev(data, n));
-    printf("Min:      %.4f\n", min(data, n));
-    printf("Max:      %.4f\n", max(data, n));
-    printf("Range:    %.4f\n", range(data, n));
-    
-    copyArray(data, temp, n);
-    printf("Q1:       %.4f\n", quartile1(temp, n));
-    copyArray(data, temp, n);
-    printf("Q3:       %.4f\n", quartile3(temp, n));
-    copyArray(data, temp, n);
-    printf("IQR:      %.4f\n", iqr(temp, n));
-    
-    delete[] temp;
+    cout << "=== Summary Statistics ===\n";
+    cout << "Count:    " << n << "\n";
+    cout << "Mean:     " << mean(data, n) << "\n";
+    cout << "Median:   " << median(data, n) << "\n";
+    cout << "Std Dev:  " << stdev(data, n) << "\n";
+    cout << "Min:      " << min(data, n) << "\n";
+    cout << "Max:      " << max(data, n) << "\n";
+    cout << "Range:    " << range(data, n) << "\n";
+    cout << "Q1:       " << quartile1(data, n) << "\n";
+    cout << "Q3:       " << quartile3(data, n) << "\n";
 }
