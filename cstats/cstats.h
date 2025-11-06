@@ -34,6 +34,23 @@ double geometricMean(const double data[], int n);
 double harmonicMean(const double data[], int n);
 double rootMeanSquare(const double data[], int n);
 
+// Inferential statistics
+double standardError(const double data[], int n);
+double confidenceInterval95Lower(const double data[], int n);
+double confidenceInterval95Upper(const double data[], int n);
+
+// Robust statistics
+double trimmedMean(double data[], int n, double trimPercent);
+double weightedMean(const double data[], const double weights[], int n);
+
+// Regression analysis
+double linearRegressionSlope(const double x[], const double y[], int n);
+double linearRegressionIntercept(const double x[], const double y[], int n);
+double rSquared(const double x[], const double y[], int n);
+
+// Array operations
+void cumulativeSum(const double data[], double result[], int n);
+
 // Essential helpers
 void copyArray(const double src[], double dest[], int n);
 void printSummaryStats(const double data[], int n);

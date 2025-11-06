@@ -135,6 +135,11 @@ double quartile3(double data[], int n) {
     return percentile(data, n, 75.0);
 }
 
+double iqr(double data[], int n) {
+    if (n <= 0) return 0.0;
+    return quartile3(data, n) - quartile1(data, n);
+}
+
 double sampleVariance(const double data[], int n) {
     if (n <= 1) return 0.0;
     
@@ -275,6 +280,115 @@ double rootMeanSquare(const double data[], int n) {
 void copyArray(const double src[], double dest[], int n) {
     for (int i = 0; i < n; i++) {
         dest[i] = src[i];
+    }
+}
+
+double standardError(const double data[], int n) {
+    if (n <= 1) return 0.0;
+    return sampleStdev(data, n) / sqrt(n);
+}
+
+double confidenceInterval95Lower(const double data[], int n) {
+    if (n <= 1) return 0.0;
+    double m = mean(data, n);
+    double se = standardError(data, n);
+    return m - 1.96 * se;
+}
+
+double confidenceInterval95Upper(const double data[], int n) {
+    if (n <= 1) return 0.0;
+    double m = mean(data, n);
+    double se = standardError(data, n);
+    return m + 1.96 * se;
+}
+
+double trimmedMean(double data[], int n, double trimPercent) {
+    if (n <= 0 || trimPercent < 0 || trimPercent >= 50) return 0.0;
+    
+    sortArray(data, n);
+    
+    int trimCount = (int)(n * trimPercent / 100.0);
+    int newN = n - 2 * trimCount;
+    
+    if (newN <= 0) return mean(data, n);
+    
+    double sum = 0.0;
+    for (int i = trimCount; i < n - trimCount; i++) {
+        sum += data[i];
+    }
+    
+    return sum / newN;
+}
+
+double weightedMean(const double data[], const double weights[], int n) {
+    if (n <= 0) return 0.0;
+    
+    double weightedSum = 0.0;
+    double totalWeight = 0.0;
+    
+    for (int i = 0; i < n; i++) {
+        weightedSum += data[i] * weights[i];
+        totalWeight += weights[i];
+    }
+    
+    if (totalWeight == 0.0) return 0.0;
+    return weightedSum / totalWeight;
+}
+
+double linearRegressionSlope(const double x[], const double y[], int n) {
+    if (n <= 1) return 0.0;
+    
+    double meanX = mean(x, n);
+    double meanY = mean(y, n);
+    
+    double numerator = 0.0;
+    double denominator = 0.0;
+    
+    for (int i = 0; i < n; i++) {
+        numerator += (x[i] - meanX) * (y[i] - meanY);
+        denominator += (x[i] - meanX) * (x[i] - meanX);
+    }
+    
+    if (denominator == 0.0) return 0.0;
+    return numerator / denominator;
+}
+
+double linearRegressionIntercept(const double x[], const double y[], int n) {
+    if (n <= 1) return 0.0;
+    
+    double slope = linearRegressionSlope(x, y, n);
+    double meanX = mean(x, n);
+    double meanY = mean(y, n);
+    
+    return meanY - slope * meanX;
+}
+
+double rSquared(const double x[], const double y[], int n) {
+    if (n <= 1) return 0.0;
+    
+    double slope = linearRegressionSlope(x, y, n);
+    double intercept = linearRegressionIntercept(x, y, n);
+    double meanY = mean(y, n);
+    
+    double ssRes = 0.0;
+    double ssTot = 0.0;
+    
+    for (int i = 0; i < n; i++) {
+        double predicted = slope * x[i] + intercept;
+        ssRes += (y[i] - predicted) * (y[i] - predicted);
+        ssTot += (y[i] - meanY) * (y[i] - meanY);
+    }
+    
+    if (ssTot == 0.0) return 0.0;
+    return 1.0 - (ssRes / ssTot);
+}
+
+void cumulativeSum(const double data[], double result[], int n) {
+    if (n <= 0) return;
+    
+    result[0] = data[0];
+    for (int i = 1; i < n; i++) {
+        result[i] = result[i - 1] + data[i];
     }
 }
 
