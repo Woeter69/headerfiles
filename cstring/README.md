@@ -1,25 +1,20 @@
-# CString - Comprehensive String Manipulation Library for C++
+# CString - String Manipulation Library for C++
 
-A robust, easy-to-use string manipulation library providing a wide range of string functions for C++ applications without external dependencies.
+A robust, easy-to-use string manipulation library providing essential string functions for C++ applications without external dependencies.
 
 ## Features
 
 - **Basic Operations**: Length, copy, concatenate, compare
-- **Search Operations**: Find character, find substring, count occurrences
+- **Search Operations**: Find character, find substring, count occurrences, contains
 - **String Manipulation**: Reverse, uppercase, lowercase, trim, remove spaces
-- **String Analysis**: Count vowels, consonants, words, digits, check palindrome
-- **String Comparison**: Case-insensitive compare, starts with, ends with, contains
-- **String Modification**: Replace characters/substrings, insert, delete
-- **String Extraction**: Substring, left, right, mid operations
-- **String Padding**: Left pad, right pad, center alignment
-- **String Validation**: Check alpha, digit, alphanumeric, case validation
-- **Character Validation**: Individual character type checking
-- **String Conversion**: Integer/float to/from string
-- **String Tokenization**: Split and join operations
-- **String Transformation**: Remove duplicates, compress spaces, swap case, capitalize
-- **String Rotation**: Rotate left/right, shuffle
-- **String Encoding**: ROT13, Caesar cipher, reverse words
-- **String Metrics**: Hamming distance, Levenshtein distance
+- **String Analysis**: Count vowels, consonants, words, check palindrome
+- **String Modification**: Replace characters, insert strings, n-copy, n-concat
+- **String Extraction**: Substring operations
+- **String Validation**: Check alpha, digit, alphanumeric
+- **Character Validation**: Check alpha, digit, whitespace
+- **String Conversion**: Integer to/from string
+- **String Tokenization**: Split operations
+- **String Transformation**: Remove characters, capitalize words/first letter
 
 ## Installation
 
@@ -44,7 +39,6 @@ g++ -o myprogram myprogram.cpp cstring.cpp
 int main() {
     char str1[100] = "Hello World";
     char str2[100];
-    char result[200];
     
     // Basic operations
     int len = stringLength(str1);  // 11
@@ -55,10 +49,9 @@ int main() {
     reverseString(str1);           // "DLROW OLLEH"
     
     // String analysis
-    char text[] = "Hello World 123";
+    char text[] = "Hello World";
     int vowels = countVowels(text);      // 3
-    int digits = countDigits(text);      // 3
-    int words = countWords(text);        // 3
+    int words = countWords(text);        // 2
     
     // String search
     int pos = findChar(text, 'W');       // 6
@@ -92,14 +85,11 @@ Finds first occurrence of a character. Returns index or -1.
 #### `int findSubstring(const char str[], const char substr[])`
 Finds first occurrence of a substring. Returns starting index or -1.
 
-#### `int findLastChar(const char str[], char ch)`
-Finds last occurrence of a character.
-
 #### `int countOccurrences(const char str[], char ch)`
 Counts how many times a character appears.
 
-#### `int countSubstringOccurrences(const char str[], const char substr[])`
-Counts how many times a substring appears.
+#### `int stringContains(const char str[], const char substr[])`
+Checks if string contains substring. Returns 1 or 0.
 
 ### String Manipulation
 
@@ -125,14 +115,23 @@ char text[] = "Hello World";
 replaceChar(text, 'o', '0');  // "Hell0 W0rld"
 ```
 
-#### `void swapCase(char str[])`
-Swaps uppercase to lowercase and vice versa.
+#### `void insertString(char str[], const char insert[], int pos)`
+Inserts a string at specified position.
+
+#### `void stringNCopy(char dest[], const char src[], int n)`
+Copies up to n characters from source to destination.
+
+#### `void stringNConcat(char dest[], const char src[], int n)`
+Appends up to n characters from source to destination.
 
 #### `void capitalizeWords(char str[])`
 Capitalizes the first letter of each word.
 
 #### `void capitalizeFirst(char str[])`
 Capitalizes only the first character.
+
+#### `void removeChar(char str[], char ch)`
+Removes all occurrences of a character.
 
 ### String Analysis
 
@@ -145,37 +144,8 @@ Counts consonant letters.
 #### `int countWords(const char str[])`
 Counts words (separated by whitespace).
 
-#### `int countDigits(const char str[])`
-Counts digit characters (0-9).
-
-#### `int countAlpha(const char str[])`
-Counts alphabetic characters.
-
-#### `int countSpaces(const char str[])`
-Counts space characters.
-
 #### `int isPalindrome(const char str[])`
 Checks if string reads the same forwards and backwards. Returns 1 or 0.
-
-### String Comparison
-
-#### `int stringCompareIgnoreCase(const char str1[], const char str2[])`
-Case-insensitive string comparison.
-
-#### `int stringStartsWith(const char str[], const char prefix[])`
-Checks if string starts with prefix. Returns 1 or 0.
-
-#### `int stringEndsWith(const char str[], const char suffix[])`
-Checks if string ends with suffix. Returns 1 or 0.
-
-#### `int stringContains(const char str[], const char substr[])`
-Checks if string contains substring. Returns 1 or 0.
-
-#### `int stringEquals(const char str1[], const char str2[])`
-Checks exact equality. Returns 1 or 0.
-
-#### `int stringEqualsIgnoreCase(const char str1[], const char str2[])`
-Checks equality ignoring case. Returns 1 or 0.
 
 ### String Extraction
 
@@ -186,30 +156,6 @@ char text[] = "Hello World";
 char sub[50];
 substring(text, 6, 5, sub);  // "World"
 ```
-
-#### `void leftString(const char str[], int n, char result[])`
-Extracts leftmost n characters.
-
-#### `void rightString(const char str[], int n, char result[])`
-Extracts rightmost n characters.
-
-#### `void midString(const char str[], int start, int end, char result[])`
-Extracts characters from start to end index (inclusive).
-
-### String Padding
-
-#### `void padLeft(char str[], int totalWidth, char padChar)`
-Pads string on the left to reach total width.
-```cpp
-char num[20] = "42";
-padLeft(num, 5, '0');  // "00042"
-```
-
-#### `void padRight(char str[], int totalWidth, char padChar)`
-Pads string on the right.
-
-#### `void centerString(char str[], int totalWidth, char padChar)`
-Centers string within total width.
 
 ### String Validation
 
@@ -222,12 +168,6 @@ Checks if all characters are digits. Returns 1 or 0.
 #### `int isAlphaNumeric(const char str[])`
 Checks if all characters are alphanumeric. Returns 1 or 0.
 
-#### `int isLowerCase(const char str[])`
-Checks if all letters are lowercase. Returns 1 or 0.
-
-#### `int isUpperCase(const char str[])`
-Checks if all letters are uppercase. Returns 1 or 0.
-
 ### Character Validation
 
 #### `int isCharAlpha(char ch)`
@@ -235,15 +175,6 @@ Checks if character is alphabetic.
 
 #### `int isCharDigit(char ch)`
 Checks if character is a digit.
-
-#### `int isCharAlphaNumeric(char ch)`
-Checks if character is alphanumeric.
-
-#### `int isCharLower(char ch)`
-Checks if character is lowercase.
-
-#### `int isCharUpper(char ch)`
-Checks if character is uppercase.
 
 #### `int isCharWhitespace(char ch)`
 Checks if character is whitespace.
@@ -264,12 +195,6 @@ Converts string to integer.
 int num = stringToInt("42");  // 42
 ```
 
-#### `void floatToString(float num, char str[], int precision)`
-Converts float to string with specified decimal places.
-
-#### `float stringToFloat(const char str[])`
-Converts string to float.
-
 ### String Tokenization
 
 #### `int splitString(const char str[], char delimiter, char tokens[][100], int maxTokens)`
@@ -279,65 +204,6 @@ char text[] = "apple,banana,cherry";
 char tokens[10][100];
 int count = splitString(text, ',', tokens, 10);  // count = 3
 ```
-
-#### `void joinStrings(char result[], const char strings[][100], int count, const char delimiter[])`
-Joins multiple strings with delimiter.
-
-### String Transformation
-
-#### `void removeChar(char str[], char ch)`
-Removes all occurrences of a character.
-
-#### `void removeSubstring(char str[], const char substr[])`
-Removes first occurrence of substring.
-
-#### `void removeDuplicates(char str[])`
-Removes duplicate characters, keeping first occurrence.
-
-#### `void compressSpaces(char str[])`
-Compresses multiple consecutive spaces into single spaces.
-
-### String Rotation & Encoding
-
-#### `void rotateLeft(char str[], int positions)`
-Rotates string left by specified positions.
-```cpp
-char text[] = "ABCDE";
-rotateLeft(text, 2);  // "CDEAB"
-```
-
-#### `void rotateRight(char str[], int positions)`
-Rotates string right by specified positions.
-
-#### `void encodeROT13(char str[])`
-Encodes string using ROT13 cipher.
-
-#### `void encodeCaesar(char str[], int shift)`
-Encodes string using Caesar cipher with specified shift.
-
-#### `void reverseWords(char str[])`
-Reverses the order of words in a string.
-```cpp
-char text[] = "Hello World";
-reverseWords(text);  // "World Hello"
-```
-
-### String Metrics
-
-#### `int hammingDistance(const char str1[], const char str2[])`
-Calculates Hamming distance (number of differing positions). Returns -1 if lengths differ.
-
-#### `int levenshteinDistance(const char str1[], const char str2[])`
-Calculates Levenshtein distance (minimum edit distance).
-```cpp
-int dist = levenshteinDistance("kitten", "sitting");  // 3
-```
-
-#### `int longestCommonPrefix(const char str1[], const char str2[], char result[])`
-Finds longest common prefix. Returns length.
-
-#### `int longestCommonSuffix(const char str1[], const char str2[], char result[])`
-Finds longest common suffix. Returns length.
 
 ## Complete Example
 
@@ -362,8 +228,8 @@ int main() {
     // String search and replace
     char sentence[100] = "I love cats and cats love me";
     if (stringContains(sentence, "cats")) {
-        std::cout << "Found 'cats' " << countSubstringOccurrences(sentence, "cats") 
-                  << " times" << std::endl;
+        std::cout << "Found 'cats' " << countOccurrences(sentence, 'c') 
+                  << " 'c' characters" << std::endl;
     }
     
     // String conversion
@@ -384,14 +250,10 @@ int main() {
     }
     std::cout << std::endl;
     
-    // String encoding
-    char secret[] = "hello";
-    encodeROT13(secret);
-    std::cout << "ROT13: " << secret << std::endl;  // "uryyb"
-    
-    // String metrics
-    int dist = levenshteinDistance("kitten", "sitting");
-    std::cout << "Edit distance: " << dist << std::endl;  // 3
+    // Character validation
+    char ch = 'A';
+    std::cout << "Is '" << ch << "' alpha? " 
+              << (isCharAlpha(ch) ? "Yes" : "No") << std::endl;
     
     return 0;
 }
@@ -400,9 +262,10 @@ int main() {
 ## Notes
 
 - All string modification functions that work in-place require the destination array to have sufficient space
-- String comparison is case-sensitive unless using the `IgnoreCase` variants
+- String comparison is case-sensitive by default
 - Array bounds are not checked - ensure sufficient buffer sizes
 - Functions use null-terminated C-style strings
+- All functions include inline comments for better code readability
 
 ## Author
 
@@ -410,4 +273,4 @@ Pranjul Gupta
 
 ## Total Functions
 
-**77 functions** covering all aspects of string manipulation and analysis.
+**35 functions** covering essential string manipulation and analysis operations.
