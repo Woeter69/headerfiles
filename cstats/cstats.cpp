@@ -289,6 +289,122 @@ double rootMeanSquare(const double data[], int n) {
 }
 
 // ============================================================================
+// INFERENTIAL STATISTICS
+// ============================================================================
+
+// Calculates standard error: sample stdev / sqrt(n)
+double standardError(const double data[], int n) {
+    if (n <= 1) return 0.0;
+    return sampleStdev(data, n) / sqrt(n);
+}
+
+// Lower bound of 95% confidence interval: mean - 1.96*SE
+double confidenceInterval95Lower(const double data[], int n) {
+    if (n <= 1) return 0.0;
+    double m = mean(data, n);
+    double se = standardError(data, n);
+    return m - 1.96 * se;
+}
+
+// Upper bound of 95% confidence interval: mean + 1.96*SE
+double confidenceInterval95Upper(const double data[], int n) {
+    if (n <= 1) return 0.0;
+    double m = mean(data, n);
+    double se = standardError(data, n);
+    return m + 1.96 * se;
+}
+
+// ============================================================================
+// ROBUST STATISTICS
+// ============================================================================
+
+// Calculates mean after removing outliers from both ends
+double trimmedMean(double data[], int n, double trimPercent) {
+    if (n <= 0 || trimPercent < 0 || trimPercent >= 50) return 0.0;
+    sortArray(data, n);
+    int trimCount = (int)(n * trimPercent / 100.0);
+    int start = trimCount;
+    int end = n - trimCount;
+    if (end <= start) return 0.0;
+    double sum = 0.0;
+    for (int i = start; i < end; i++) {
+        sum += data[i];
+    }
+    return sum / (end - start);
+}
+
+// Calculates weighted average: sum(data[i] * weights[i]) / sum(weights[i])
+double weightedMean(const double data[], const double weights[], int n) {
+    if (n <= 0) return 0.0;
+    double sumWeighted = 0.0;
+    double sumWeights = 0.0;
+    for (int i = 0; i < n; i++) {
+        sumWeighted += data[i] * weights[i];
+        sumWeights += weights[i];
+    }
+    if (sumWeights == 0.0) return 0.0;
+    return sumWeighted / sumWeights;
+}
+
+// ============================================================================
+// REGRESSION ANALYSIS
+// ============================================================================
+
+// Calculates slope of linear regression: m in y = mx + b
+double linearRegressionSlope(const double x[], const double y[], int n) {
+    if (n <= 1) return 0.0;
+    double meanX = mean(x, n);
+    double meanY = mean(y, n);
+    double numerator = 0.0;
+    double denominator = 0.0;
+    for (int i = 0; i < n; i++) {
+        numerator += (x[i] - meanX) * (y[i] - meanY);
+        denominator += (x[i] - meanX) * (x[i] - meanX);
+    }
+    if (denominator == 0.0) return 0.0;
+    return numerator / denominator;
+}
+
+// Calculates y-intercept of linear regression: b in y = mx + b
+double linearRegressionIntercept(const double x[], const double y[], int n) {
+    if (n <= 1) return 0.0;
+    double slope = linearRegressionSlope(x, y, n);
+    double meanX = mean(x, n);
+    double meanY = mean(y, n);
+    return meanY - slope * meanX;
+}
+
+// Calculates R-squared: proportion of variance explained by regression
+double rSquared(const double x[], const double y[], int n) {
+    if (n <= 1) return 0.0;
+    double slope = linearRegressionSlope(x, y, n);
+    double intercept = linearRegressionIntercept(x, y, n);
+    double meanY = mean(y, n);
+    double ssRes = 0.0;  // Residual sum of squares
+    double ssTot = 0.0;  // Total sum of squares
+    for (int i = 0; i < n; i++) {
+        double predicted = slope * x[i] + intercept;
+        ssRes += (y[i] - predicted) * (y[i] - predicted);
+        ssTot += (y[i] - meanY) * (y[i] - meanY);
+    }
+    if (ssTot == 0.0) return 0.0;
+    return 1.0 - (ssRes / ssTot);
+}
+
+// ============================================================================
+// ARRAY OPERATIONS
+// ============================================================================
+
+// Calculates cumulative sum: result[i] = sum of data[0] to data[i]
+void cumulativeSum(const double data[], double result[], int n) {
+    if (n <= 0) return;
+    result[0] = data[0];
+    for (int i = 1; i < n; i++) {
+        result[i] = result[i - 1] + data[i];
+    }
+}
+
+// ============================================================================
 // VECTOR OPERATIONS
 // ============================================================================
 
@@ -418,4 +534,10 @@ void printSummaryStats(double data[], int n) {
     cout << "Range:    " << range(data, n) << "\n";
     cout << "Q1:       " << quartile1(data, n) << "\n";
     cout << "Q3:       " << quartile3(data, n) << "\n";
+}
+
+// The file might not compile as it does not have a main() function.
+
+int main() {
+    cout << "Just for compiling" << endl;
 }
