@@ -1,0 +1,70 @@
+================================================================================
+CSTATS HEADER FILE DESIGN & REUSABILITY GUIDE
+================================================================================
+
+DESIGN PHILOSOPHY
+The cstats.h library follows a header-only interface pattern with clean 
+separation of concerns, providing 50+ statistical functions for C++ applications.
+
+CORE DESIGN PRINCIPLES
+1. Single-Purpose Header Guard - Prevents multiple inclusion issues
+2. Pure Function Declarations - Header contains only prototypes, implementation 
+   in cstats.cpp for fast compilation
+3. Comprehensive Documentation - Doxygen-style comments (@brief, @param, @return)
+4. Logical Organization - Functions grouped into 10 semantic categories:
+   • Basic Statistics (mean, median, variance, stdev, min, max, sum, range)
+   • Advanced Statistics (percentile, quartiles, skewness, kurtosis, z-scores)
+   • Inferential Statistics (standardError, confidenceInterval95)
+   • Robust Statistics (trimmedMean, weightedMean, MAD)
+   • Correlation & Regression (covariance, correlation, linearRegression, rSquared)
+   • Alternative Means (geometricMean, harmonicMean, rootMeanSquare)
+   • Vector Operations (dotProduct, crossProduct, vectorMagnitude, vectorAngle)
+   • Array Operations (cumulativeSum, sortArray, copyArray)
+
+HOW TO REUSE THIS LIBRARY
+
+Method 1: Direct Integration (Small Projects)
+   cp cstats.h cstats.cpp /path/to/your/project/
+   g++ -o myapp main.cpp cstats.cpp -lm
+
+Method 2: Static Library (Large Projects)
+   g++ -c cstats.cpp -o cstats.o
+   ar rcs libcstats.a cstats.o
+   g++ -o myapp main.cpp -lcstats -lm
+
+Method 3: CMake Integration (Modern C++)
+   add_library(cstats cstats.cpp)
+   target_link_libraries(myapp PRIVATE cstats)
+
+KEY DESIGN STRENGTHS
+• Minimal Dependencies - Only requires <cmath>, no external libraries
+• Const-Correctness - Most functions use const to prevent modification
+• Error Handling - Returns 0.0 for invalid inputs (no exceptions)
+• Array-Based Interface - Uses raw arrays for zero overhead and C compatibility
+• Memory Safety - No dynamic allocation, user controls all memory
+
+USAGE EXAMPLE
+   double data[] = {85.5, 92.0, 78.5, 88.0, 95.5};
+   int n = 5;
+   double avg = mean(data, n);
+   double med = median(data, n);  // Note: sorts array
+   double sd = stdev(data, n);
+   printSummaryStats(data, n);
+
+BEST PRACTICES
+1. Array Preservation - Some functions sort arrays (median, percentile). 
+   Use copyArray() first if you need the original.
+2. Memory Management - Pre-allocate output arrays for functions like 
+   cumulativeSum(data, result, n)
+3. Data Validation - Check requirements (e.g., geometricMean needs positive values)
+
+COMMON PITFALLS
+• Forgetting array modification - median() sorts the input array
+• Division by zero - coefficientOfVariation returns 0.0 if mean is 0
+• Invalid data - geometricMean returns 0.0 for negative values
+
+EXTENSIBILITY
+To add new functions: Add declaration in cstats.h → Add implementation in 
+cstats.cpp → Add test in test_all.cpp → Update README.md
+
+================================================================================

@@ -199,7 +199,7 @@ int main() {
     double src[] = {1, 2, 3, 4, 5};
     double dest[5];
     copyArray(src, dest, 5);
-    cout << "copyArray([1,2,3,4,5]): [" << dest[0] << ", ..." << dest[4] << "]" << endl;
+    cout << "copyArray([1,2,3,4,5]): [" << dest[0] << ", " << dest[1] << ", " << dest[2] << ", " << dest[3] << ", " << dest[4] << "]" << endl;
     
     double sortData[] = {5, 2, 8, 1, 9};
     sortArray(sortData, 5);

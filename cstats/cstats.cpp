@@ -538,6 +538,3 @@ void printSummaryStats(double data[], int n) {
 
 // The file might not compile as it does not have a main() function.
 
-int main() {
-    cout << "Just for compiling" << endl;
-}
