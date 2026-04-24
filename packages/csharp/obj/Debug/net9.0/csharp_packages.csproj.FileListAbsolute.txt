@@ -1,0 +1,15 @@
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/bin/Debug/net9.0/csharp_packages
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/bin/Debug/net9.0/csharp_packages.deps.json
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/bin/Debug/net9.0/csharp_packages.runtimeconfig.json
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/bin/Debug/net9.0/csharp_packages.dll
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/bin/Debug/net9.0/csharp_packages.pdb
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/obj/Debug/net9.0/csharp_packages.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/obj/Debug/net9.0/csharp_packages.AssemblyInfoInputs.cache
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/obj/Debug/net9.0/csharp_packages.AssemblyInfo.cs
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/obj/Debug/net9.0/csharp_packages.csproj.CoreCompileInputs.cache
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/obj/Debug/net9.0/csharp_packages.sourcelink.json
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/obj/Debug/net9.0/csharp_packages.dll
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/obj/Debug/net9.0/refint/csharp_packages.dll
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/obj/Debug/net9.0/csharp_packages.pdb
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/obj/Debug/net9.0/csharp_packages.genruntimeconfig.cache
+/mnt/d_drive/programs/headerfiles/packages/csharp_packages/obj/Debug/net9.0/ref/csharp_packages.dll
