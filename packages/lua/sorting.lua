@@ -69,4 +69,73 @@ function sorting.HeapSort(arr, less)
     end
 end
 
+function sorting.QuickSort(arr, less)
+    local function partition(low, high)
+        local pivot = arr[high]
+        local i = low - 1
+        for j = low, high - 1 do
+            if less(arr[j], pivot) then
+                i = i + 1
+                arr[i], arr[j] = arr[j], arr[i]
+            end
+        end
+        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        return i + 1
+    end
+
+    local function quickSortHelper(low, high)
+        if low < high then
+            local pi = partition(low, high)
+            quickSortHelper(low, pi - 1)
+            quickSortHelper(pi + 1, high)
+        end
+    end
+
+    quickSortHelper(1, #arr)
+end
+
+function sorting.MergeSort(arr, less)
+    local function merge(low, mid, high)
+        local n1 = mid - low + 1
+        local n2 = high - mid
+        local L = {}
+        local R = {}
+        for i = 1, n1 do L[i] = arr[low + i - 1] end
+        for j = 1, n2 do R[j] = arr[mid + j] end
+        
+        local i, j, k = 1, 1, low
+        while i <= n1 and j <= n2 do
+            if not less(R[j], L[i]) then
+                arr[k] = L[i]
+                i = i + 1
+            else
+                arr[k] = R[j]
+                j = j + 1
+            end
+            k = k + 1
+        end
+        while i <= n1 do
+            arr[k] = L[i]
+            i = i + 1
+            k = k + 1
+        end
+        while j <= n2 do
+            arr[k] = R[j]
+            j = j + 1
+            k = k + 1
+        end
+    end
+
+    local function mergeSortHelper(low, high)
+        if low < high then
+            local mid = math.floor((low + high) / 2)
+            mergeSortHelper(low, mid)
+            mergeSortHelper(mid + 1, high)
+            merge(low, mid, high)
+        end
+    end
+
+    mergeSortHelper(1, #arr)
+end
+
 return sorting

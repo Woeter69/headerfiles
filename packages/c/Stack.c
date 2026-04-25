@@ -23,3 +23,28 @@ void free_stack(Stack* s) {
     free_singly(s->top);
     free(s);
 }
+
+int is_valid_parentheses(const char* str) {
+    Stack* s = create_stack();
+    for (int i = 0; str[i] != '\0'; i++) {
+        char c = str[i];
+        if (c == '(' || c == '{' || c == '[') {
+            push(s, c);
+        } else if (c == ')' || c == '}' || c == ']') {
+            if (is_empty_stack(s)) {
+                free_stack(s);
+                return 0;
+            }
+            int top_val = pop(s);
+            if ((c == ')' && top_val != '(') ||
+                (c == '}' && top_val != '{') ||
+                (c == ']' && top_val != '[')) {
+                free_stack(s);
+                return 0;
+            }
+        }
+    }
+    int valid = is_empty_stack(s);
+    free_stack(s);
+    return valid;
+}

@@ -11,3 +11,21 @@ public class MyStack<T> {
     }
     public bool IsEmpty => _items.Count == 0;
 }
+
+public static class StackUtilities {
+    public static bool IsValidParentheses(string s) {
+        var stack = new MyStack<char>();
+        foreach (char c in s) {
+            if (c == '(' || c == '{' || c == '[') {
+                stack.Push(c);
+            } else if (c == ')' || c == '}' || c == ']') {
+                if (stack.IsEmpty) return false;
+                char top = stack.Pop();
+                if (c == ')' && top != '(') return false;
+                if (c == '}' && top != '{') return false;
+                if (c == ']' && top != '[') return false;
+            }
+        }
+        return stack.IsEmpty;
+    }
+}

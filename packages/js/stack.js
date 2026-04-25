@@ -14,4 +14,23 @@ class Stack {
     }
 }
 
-module.exports = { Stack };
+function isValidParentheses(s) {
+    const stack = new Stack();
+    const map = {
+        ')': '(',
+        '}': '{',
+        ']': '['
+    };
+    for (let char of s) {
+        if (char === '(' || char === '{' || char === '[') {
+            stack.push(char);
+        } else if (char === ')' || char === '}' || char === ']') {
+            if (stack.items.length === 0 || stack.pop() !== map[char]) {
+                return false;
+            }
+        }
+    }
+    return stack.items.length === 0;
+}
+
+module.exports = { Stack, isValidParentheses };

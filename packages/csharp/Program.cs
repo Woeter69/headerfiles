@@ -99,9 +99,49 @@ class Program
         Sorting.HeapSort(arr);
         Console.WriteLine($"Heap Sort: {string.Join(", ", arr)}");
 
+        arr = new[] { 4, 2, 7, 1, 3 };
+        Sorting.QuickSort(arr);
+        Console.WriteLine($"Quick Sort: {string.Join(", ", arr)}");
+
+        arr = new[] { 4, 2, 7, 1, 3 };
+        Sorting.MergeSort(arr);
+        Console.WriteLine($"Merge Sort: {string.Join(", ", arr)}");
+
         // Search
         int[] sortedArr = { 1, 2, 3, 4, 7 };
         Console.WriteLine($"Linear Search for 3: Index {Searching.LinearSearch(sortedArr, 3)}");
         Console.WriteLine($"Binary Search for 4: Index {Searching.BinarySearch(sortedArr, 4)}");
+
+        // Linked List New Features
+        var sllTest = new SinglyLinkedList<int>();
+        sllTest.Add(1);
+        sllTest.Add(2);
+        sllTest.Add(3);
+        sllTest.Reverse();
+        Console.WriteLine($"Reversed SLL Head: {sllTest.Head?.Data}");
+        Console.WriteLine($"Has Cycle SLL: {sllTest.HasCycle()}");
+
+        // Stack Utilities
+        Console.WriteLine($"IsValidParentheses '()[]{{}}': {StackUtilities.IsValidParentheses("()[]{}")}");
+
+        // CircularQueue
+        var cq = new CircularQueue<int>(3);
+        cq.Enqueue(1);
+        cq.Enqueue(2);
+        cq.Enqueue(3);
+        Console.WriteLine($"CircularQueue Dequeue: {cq.Dequeue()}");
+
+        // Trie
+        var trie = new Trie();
+        trie.Insert("apple");
+        Console.WriteLine($"Trie Search 'apple': {trie.Search("apple")}");
+        Console.WriteLine($"Trie StartsWith 'app': {trie.StartsWith("app")}");
+
+        // AVL Tree
+        var avl = new AVLTree<int>();
+        avl.Insert(10);
+        avl.Insert(20);
+        avl.Insert(30);
+        Console.WriteLine($"AVL Root after 10,20,30: {avl.Root?.Data}");
     }
 }

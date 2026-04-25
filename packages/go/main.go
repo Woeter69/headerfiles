@@ -112,4 +112,40 @@ func main() {
 
 	lIdx := search.LinearSearch(arr, 100)
 	fmt.Printf("Linear Search index for 100 (not found): %d\n", lIdx)
+
+	fmt.Println("\n=== Linked List Additions ===")
+	ll.Reverse()
+	fmt.Printf("Reversed Linked List, HasCycle: %t\n", ll.HasCycle())
+
+	fmt.Println("\n=== Stack / Utilities ===")
+	fmt.Printf("IsValidParentheses('{[()]}'): %t\n", stack.IsValidParentheses("{[()]}"))
+
+	fmt.Println("\n=== Circular Queue ===")
+	cq := queue.NewCircularQueue[int](3)
+	cq.Enqueue(1)
+	cq.Enqueue(2)
+	cq.Enqueue(3)
+	cqVal, _ := cq.Dequeue()
+	fmt.Printf("Dequeued from Circular Queue: %d\n", cqVal)
+
+	fmt.Println("\n=== Tree (Trie) ===")
+	trie := tree.NewTrie()
+	trie.Insert("apple")
+	fmt.Printf("Trie contains 'apple'? %t\n", trie.Search("apple"))
+	fmt.Printf("Trie starts with 'app'? %t\n", trie.StartsWith("app"))
+
+	fmt.Println("\n=== Tree (AVL) ===")
+	avl := tree.NewAVLTree[int](func(a, b int) bool { return a < b })
+	avl.Insert(10)
+	avl.Insert(20)
+	avl.Insert(30)
+	fmt.Printf("AVL Tree contains 20? %t\n", avl.Search(20))
+
+	fmt.Println("\n=== Sorting Additions ===")
+	arr2 := []int{5, 2, 9, 1, 5, 6}
+	sorting.QuickSort(arr2, func(a, b int) bool { return a < b })
+	fmt.Printf("Quick Sorted Array: %v\n", arr2)
+	arr3 := []int{8, 3, 7, 4, 2}
+	sortedArr3 := sorting.MergeSort(arr3, func(a, b int) bool { return a < b })
+	fmt.Printf("Merge Sorted Array: %v\n", sortedArr3)
 }

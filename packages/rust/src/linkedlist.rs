@@ -22,6 +22,41 @@ impl<T> SinglyLinkedList<T> {
         });
         self.head = Some(new_node);
     }
+
+    pub fn reverse(&mut self) {
+        let mut prev = None;
+        let mut curr = self.head.take();
+        while let Some(mut node) = curr {
+            let next = node.next.take();
+            node.next = prev;
+            prev = Some(node);
+            curr = next;
+        }
+        self.head = prev;
+    }
+
+    pub fn has_cycle(&self) -> bool {
+        let mut slow = &self.head;
+        let mut fast = &self.head;
+
+        while let Some(f_node) = fast {
+            if let Some(f_next) = &f_node.next {
+                fast = &f_next.next;
+                if let Some(s_node) = slow {
+                    slow = &s_node.next;
+                }
+
+                if let (Some(s), Some(f)) = (slow, fast) {
+                    if std::ptr::eq(&**s, &**f) {
+                        return true;
+                    }
+                }
+            } else {
+                break;
+            }
+        }
+        false
+    }
 }
 
 pub struct DoublyLinkedList<T> {

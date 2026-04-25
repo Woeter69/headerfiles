@@ -191,5 +191,64 @@ free_doubly:
 	.cfi_endproc
 .LFE27:
 	.size	free_doubly, .-free_doubly
+	.globl	reverse
+	.type	reverse, @function
+reverse:
+.LFB28:
+	.cfi_startproc
+	testq	%rdi, %rdi
+	je	.L29
+	movl	$0, %edx
+	.p2align 5
+.L28:
+	movq	%rdi, %rax
+	movq	8(%rdi), %rdi
+	movq	%rdx, 8(%rax)
+	movq	%rax, %rdx
+	testq	%rdi, %rdi
+	jne	.L28
+	ret
+.L29:
+	movq	%rdi, %rax
+	ret
+	.cfi_endproc
+.LFE28:
+	.size	reverse, .-reverse
+	.globl	has_cycle
+	.type	has_cycle, @function
+has_cycle:
+.LFB29:
+	.cfi_startproc
+	testq	%rdi, %rdi
+	je	.L35
+	cmpq	$0, 8(%rdi)
+	je	.L36
+	movq	%rdi, %rax
+.L33:
+	movq	8(%rax), %rax
+	testq	%rax, %rax
+	je	.L39
+	movq	8(%rdi), %rdi
+	movq	8(%rax), %rax
+	cmpq	%rax, %rdi
+	je	.L37
+	testq	%rax, %rax
+	jne	.L33
+	movl	$0, %eax
+	ret
+.L39:
+	ret
+.L35:
+	movl	$0, %eax
+	ret
+.L36:
+	movl	$0, %eax
+	ret
+.L37:
+	movl	$1, %eax
+	ret
+	.cfi_endproc
+.LFE29:
+	.size	has_cycle, .-has_cycle
 	.ident	"GCC: (GNU) 15.2.1 20260209"
 	.section	.note.GNU-stack,"",@progbits

@@ -30,3 +30,31 @@ pub fn Stack(comptime T: type) type {
         }
     };
 }
+
+pub fn isValidParentheses(allocator: Allocator, s: []const u8) !bool {
+    var st = Stack(u8).init(allocator);
+    defer st.deinit();
+
+    for (s) |c| {
+        switch (c) {
+            '(', '[', '{' => try st.push(c),
+            ')' => {
+                if (st.pop()) |top| {
+                    if (top != '(') return false;
+                } else return false;
+            },
+            ']' => {
+                if (st.pop()) |top| {
+                    if (top != '[') return false;
+                } else return false;
+            },
+            '}' => {
+                if (st.pop()) |top| {
+                    if (top != '{') return false;
+                } else return false;
+            },
+            else => return false,
+        }
+    }
+    return st.peek() == null;
+}

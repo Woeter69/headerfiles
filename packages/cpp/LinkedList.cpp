@@ -17,6 +17,30 @@ void LinkedList::print() const {
     std::cout << "\n";
 }
 
+void LinkedList::reverse() {
+    ListNode* prev = nullptr;
+    ListNode* curr = head;
+    while (curr) {
+        ListNode* nextTemp = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = nextTemp;
+    }
+    head = prev;
+}
+
+bool LinkedList::hasCycle() const {
+    if (!head) return false;
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) return true;
+    }
+    return false;
+}
+
 DListNode::DListNode(int x) : val(x), prev(nullptr), next(nullptr) {}
 
 DoublyLinkedList::DoublyLinkedList() : head(nullptr) {}

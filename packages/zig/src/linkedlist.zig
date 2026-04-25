@@ -40,6 +40,31 @@ pub fn SinglyLinkedList(comptime T: type) type {
                 curr.?.next = node;
             }
         }
+
+        pub fn reverse(self: *Self) void {
+            var prev: ?*Node = null;
+            var curr = self.head;
+            var next: ?*Node = null;
+            while (curr) |node| {
+                next = node.next;
+                node.next = prev;
+                prev = node;
+                curr = next;
+            }
+            self.head = prev;
+        }
+
+        pub fn hasCycle(self: *Self) bool {
+            if (self.head == null) return false;
+            var slow = self.head;
+            var fast = self.head;
+            while (fast != null and fast.?.next != null) {
+                slow = slow.?.next;
+                fast = fast.?.next.?.next;
+                if (slow == fast) return true;
+            }
+            return false;
+        }
     };
 }
 

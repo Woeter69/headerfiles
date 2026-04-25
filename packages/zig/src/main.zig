@@ -85,5 +85,48 @@ pub fn main() !void {
     const search_idx = search.binarySearch(i32, &arr, 9);
     std.debug.print("BinarySearch for 9 found at index: {any}\n", .{search_idx});
 
+    // Linked List Extended
+    ll.reverse();
+    std.debug.print("LinkedList reversed. Head: {d}\n", .{ll.head.?.data});
+    const has_cycle = ll.hasCycle();
+    std.debug.print("LinkedList has cycle: {}\n", .{has_cycle});
+
+    // Valid Parentheses
+    const is_valid = try stack.isValidParentheses(allocator, "({[]})");
+    std.debug.print("isValidParentheses for '({{[]}})': {}\n", .{is_valid});
+
+    // Circular Queue
+    var cq = try queue.CircularQueue(i32).init(allocator, 3);
+    defer cq.deinit();
+    _ = cq.enqueue(1);
+    _ = cq.enqueue(2);
+    _ = cq.enqueue(3);
+    const is_full = cq.isFull();
+    const deq_val = cq.dequeue();
+    std.debug.print("CircularQueue is_full: {}, dequeued: {?d}\n", .{is_full, deq_val});
+
+    // Trie
+    var t = try tree.Trie.init(allocator);
+    try t.insert("hello");
+    const found_hello = t.search("hello");
+    const found_hell = t.search("hell");
+    std.debug.print("Trie search 'hello': {}, search 'hell': {}\n", .{found_hello, found_hell});
+
+    // AVL Tree
+    var avl = tree.AVLTree(i32).init(allocator);
+    try avl.insert(10);
+    try avl.insert(20);
+    try avl.insert(30); // Should trigger rotation
+    std.debug.print("AVLTree root after inserts: {d}\n", .{avl.root.?.data});
+
+    // QuickSort & MergeSort
+    var q_arr = [_]i32{ 10, 7, 8, 9, 1, 5 };
+    sorting.quickSort(i32, &q_arr);
+    std.debug.print("QuickSorted array: {any}\n", .{q_arr});
+
+    var m_arr = [_]i32{ 38, 27, 43, 3, 9, 82, 10 };
+    try sorting.mergeSort(i32, &m_arr, allocator);
+    std.debug.print("MergeSorted array: {any}\n", .{m_arr});
+
     std.debug.print("All tests completed.\n", .{});
 }

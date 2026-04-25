@@ -136,3 +136,32 @@ func (l *LinkedList[T]) Get(index int) (T, error) {
 	}
 	return curr.Value, nil
 }
+
+// Reverse reverses the singly linked list in place.
+// Time Complexity: O(n)
+func (l *LinkedList[T]) Reverse() {
+        var prev *Node[T]
+        curr := l.Head
+        l.Tail = l.Head
+        for curr != nil {
+                next := curr.Next
+                curr.Next = prev
+                prev = curr
+                curr = next
+        }
+        l.Head = prev
+}
+
+// HasCycle detects if there is a cycle in the linked list using Floyd's Tortoise and Hare algorithm.
+// Time Complexity: O(n)
+func (l *LinkedList[T]) HasCycle() bool {
+        slow, fast := l.Head, l.Head
+        for fast != nil && fast.Next != nil {
+                slow = slow.Next
+                fast = fast.Next.Next
+                if slow == fast {
+                        return true
+                }
+        }
+        return false
+}

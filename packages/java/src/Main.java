@@ -8,6 +8,10 @@ public class Main {
         SLinkedList<Integer> sll = new SLinkedList<>();
         sll.add(1); sll.add(2); sll.add(3);
         sll.printList();
+        System.out.print("Reversed: ");
+        sll.reverse();
+        sll.printList();
+        System.out.println("Has Cycle: " + sll.hasCycle());
 
         System.out.println("\n--- Doubly Linked List ---");
         DLinkedList<Integer> dll = new DLinkedList<>();
@@ -18,11 +22,21 @@ public class Main {
         MyStack<Integer> stack = new MyStack<>();
         stack.push(10); stack.push(20);
         System.out.println("Popped: " + stack.pop());
+        System.out.println("isValidParentheses(\"{[()]}\"): " + MyStack.isValidParentheses("{[()]}"));
+        System.out.println("isValidParentheses(\"{[(])}\"): " + MyStack.isValidParentheses("{[(])}"));
 
         System.out.println("\n--- Queue ---");
         MyQueue<Integer> queue = new MyQueue<>();
         queue.enqueue(30); queue.enqueue(40);
         System.out.println("Dequeued: " + queue.dequeue());
+
+        System.out.println("\n--- Circular Queue ---");
+        CircularQueue<Integer> cq = new CircularQueue<>(3);
+        cq.enqueue(1); cq.enqueue(2); cq.enqueue(3);
+        System.out.println("Is Full: " + cq.isFull());
+        System.out.println("Dequeued: " + cq.dequeue());
+        cq.enqueue(4);
+        System.out.println("Rear: " + cq.Rear());
 
         System.out.println("\n--- Deque ---");
         MyDeque<Integer> deque = new MyDeque<>();
@@ -44,6 +58,18 @@ public class Main {
         bst.insert(50); bst.insert(30); bst.insert(70);
         System.out.print("Inorder: "); bst.inorder();
         System.out.println("Search 30: " + bst.search(30));
+
+        System.out.println("\n--- AVL Tree ---");
+        AVLTree<Integer> avl = new AVLTree<>();
+        avl.insert(10); avl.insert(20); avl.insert(30);
+        System.out.print("PreOrder: "); avl.preOrder();
+
+        System.out.println("\n--- Trie ---");
+        Trie trie = new Trie();
+        trie.insert("apple");
+        System.out.println("Search 'apple': " + trie.search("apple"));
+        System.out.println("Search 'app': " + trie.search("app"));
+        System.out.println("StartsWith 'app': " + trie.startsWith("app"));
 
         System.out.println("\n--- N-ary Tree ---");
         NaryTree<String> nary = new NaryTree<>("Root");
@@ -78,6 +104,14 @@ public class Main {
         int[] arr4 = {64, 25, 12, 22, 11};
         Sorting.heapSort(arr4);
         System.out.println("Heap Sort: " + Arrays.toString(arr4));
+
+        int[] arr5 = {64, 25, 12, 22, 11};
+        Sorting.quickSort(arr5);
+        System.out.println("Quick Sort: " + Arrays.toString(arr5));
+
+        int[] arr6 = {64, 25, 12, 22, 11};
+        Sorting.mergeSort(arr6);
+        System.out.println("Merge Sort: " + Arrays.toString(arr6));
 
         System.out.println("\n--- Search ---");
         int[] sortedArr = {11, 12, 22, 25, 64};

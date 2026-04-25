@@ -24,6 +24,26 @@ class SinglyLinkedList:
             cur = cur.next
         return res
 
+    def reverse(self):
+        prev = None
+        cur = self.head
+        while cur:
+            nxt = cur.next
+            cur.next = prev
+            prev = cur
+            cur = nxt
+        self.head = prev
+
+    def has_cycle(self):
+        slow = self.head
+        fast = self.head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
+
 class DNode:
     def __init__(self, data):
         self.data = data

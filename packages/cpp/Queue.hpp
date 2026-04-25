@@ -1,5 +1,6 @@
 #pragma once
 #include <deque>
+#include <vector>
 
 class Queue {
     std::deque<int> data;
@@ -20,4 +21,20 @@ public:
     int front() const;
     int back() const;
     bool isEmpty() const;
+};
+
+class CircularQueue {
+    std::vector<int> data;
+    int head;
+    int tail;
+    int size;
+    int capacity;
+public:
+    CircularQueue(int k);
+    bool enQueue(int value);
+    bool deQueue();
+    int Front() const;
+    int Rear() const;
+    bool isEmpty() const;
+    bool isFull() const;
 };

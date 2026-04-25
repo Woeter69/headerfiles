@@ -29,4 +29,20 @@ function Stack:Size()
     return #self.elements
 end
 
+function stack.IsValidParentheses(s)
+    local st = stack.New()
+    local pairs = { [')'] = '(', ['}'] = '{', [']'] = '[' }
+    for i = 1, #s do
+        local char = s:sub(i, i)
+        if char == '(' or char == '{' or char == '[' then
+            st:Push(char)
+        elseif pairs[char] then
+            if st:IsEmpty() or st:Pop() ~= pairs[char] then
+                return false
+            end
+        end
+    end
+    return st:IsEmpty()
+end
+
 return stack

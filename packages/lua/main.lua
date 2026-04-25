@@ -110,3 +110,56 @@ print(string.format("Binary Search index for %d: %d", target, idx))
 
 local lIdx = search.LinearSearch(arr, 100)
 print(string.format("Linear Search index for 100 (not found): %d", lIdx))
+
+print("\n=== New Linked List Features ===")
+local ll2 = linkedlist.LinkedList()
+ll2:AddAtEnd(1)
+ll2:AddAtEnd(2)
+ll2:AddAtEnd(3)
+ll2:Reverse()
+print(string.format("Reversed Head: %d", ll2.head.value))
+print(string.format("Has Cycle: %s", tostring(ll2:HasCycle())))
+
+print("\n=== New Stack Utilities ===")
+print(string.format("IsValidParentheses '()[]{}': %s", tostring(stack.IsValidParentheses("()[]{}"))))
+print(string.format("IsValidParentheses '(]': %s", tostring(stack.IsValidParentheses("(]"))))
+
+print("\n=== Circular Queue ===")
+local cq = queue.NewCircularQueue(3)
+cq:Enqueue(1)
+cq:Enqueue(2)
+cq:Enqueue(3)
+print(string.format("Circular Queue is Full: %s", tostring(cq:IsFull())))
+local cqVal = cq:Dequeue()
+print(string.format("Circular Queue Dequeued: %d", cqVal))
+cq:Enqueue(4)
+print(string.format("Circular Queue Peek: %d", cq:Peek()))
+
+print("\n=== Trie ===")
+local trie = tree.NewTrie()
+trie:Insert("apple")
+print(string.format("Trie Search 'apple': %s", tostring(trie:Search("apple"))))
+print(string.format("Trie Search 'app': %s", tostring(trie:Search("app"))))
+print(string.format("Trie StartsWith 'app': %s", tostring(trie:StartsWith("app"))))
+
+print("\n=== AVL Tree ===")
+local avl = tree.NewAVLTree(function(a, b) return a < b end)
+avl:Insert(10)
+avl:Insert(20)
+avl:Insert(30)
+print(string.format("AVL Tree Root: %d", avl.root.value))
+print(string.format("AVL Tree Search 20: %s", tostring(avl:Search(20))))
+
+print("\n=== Quick Sort ===")
+local qArr = {9, -3, 5, 2, 6, 8, -6, 1, 3}
+sorting.QuickSort(qArr, function(a, b) return a < b end)
+io.write("Quick Sorted: ")
+for _, v in ipairs(qArr) do io.write(v .. " ") end
+print()
+
+print("\n=== Merge Sort ===")
+local mArr = {9, -3, 5, 2, 6, 8, -6, 1, 3}
+sorting.MergeSort(mArr, function(a, b) return a < b end)
+io.write("Merge Sorted: ")
+for _, v in ipairs(mArr) do io.write(v .. " ") end
+print()

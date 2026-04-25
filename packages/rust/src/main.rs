@@ -9,13 +9,13 @@ mod sorting;
 mod search;
 
 use linkedlist::{SinglyLinkedList, DoublyLinkedList};
-use stack::Stack;
-use queue::{Queue, Deque};
+use stack::{Stack, is_valid_parentheses};
+use queue::{Queue, Deque, CircularQueue};
 use heap::{MinHeap, MaxHeap};
 use priorityqueue::PriorityQueue;
-use tree::{BST, NaryTree};
+use tree::{BST, NaryTree, Trie, AVLTree};
 use graph::Graph;
-use sorting::{bubble_sort, selection_sort, insertion_sort, heap_sort};
+use sorting::{bubble_sort, selection_sort, insertion_sort, heap_sort, quick_sort, merge_sort};
 use search::{linear_search, binary_search};
 
 fn main() {
@@ -23,7 +23,10 @@ fn main() {
 
     let mut list = SinglyLinkedList::new();
     list.push_front(1);
-    println!("SinglyLinkedList tested.");
+    list.push_front(2);
+    list.push_front(3);
+    list.reverse();
+    println!("SinglyLinkedList tested. Has cycle: {}", list.has_cycle());
 
     let mut dlist = DoublyLinkedList::new();
     dlist.push_back(2);
@@ -33,6 +36,8 @@ fn main() {
     stack.push(10);
     println!("Stack tested. popped: {:?}", stack.pop());
 
+    println!("Valid parentheses '{{[()]}}': {}", is_valid_parentheses("{[()]}"));
+
     let mut q = Queue::new();
     q.enqueue(5);
     println!("Queue tested. dequeued: {:?}", q.dequeue());
@@ -41,6 +46,14 @@ fn main() {
     deque.push_front(1);
     deque.push_back(2);
     println!("Deque tested. popped front: {:?}", deque.pop_front());
+
+    let mut cq = CircularQueue::new(3);
+    cq.enqueue(1);
+    cq.enqueue(2);
+    cq.enqueue(3);
+    cq.dequeue();
+    cq.enqueue(4);
+    println!("CircularQueue tested. Is full: {}", cq.is_full());
 
     let mut min_heap = MinHeap::new();
     min_heap.push(3);
@@ -62,6 +75,16 @@ fn main() {
 
     let _ntree: NaryTree<i32> = NaryTree::new();
     println!("NaryTree tested.");
+
+    let mut trie = Trie::new();
+    trie.insert("hello");
+    println!("Trie tested. Search 'hello': {}, Starts with 'hell': {}", trie.search("hello"), trie.starts_with("hell"));
+
+    let mut avl = AVLTree::new();
+    avl.insert(10);
+    avl.insert(20);
+    avl.insert(30);
+    println!("AVLTree tested.");
 
     let mut g = Graph::new();
     g.add_edge(0, 1, 10);
@@ -86,6 +109,14 @@ fn main() {
     let mut arr4 = [5, 3, 8, 4, 2];
     heap_sort(&mut arr4);
     println!("Heap sort: {:?}", arr4);
+
+    let mut arr_q = [5, 3, 8, 4, 2];
+    quick_sort(&mut arr_q);
+    println!("Quick sort: {:?}", arr_q);
+
+    let mut arr_m = [5, 3, 8, 4, 2];
+    merge_sort(&mut arr_m);
+    println!("Merge sort: {:?}", arr_m);
 
     let arr5 = [1, 2, 3, 4, 5];
     println!("Linear search for 3: {:?}", linear_search(&arr5, &3));

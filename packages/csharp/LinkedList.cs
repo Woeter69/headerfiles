@@ -14,6 +14,31 @@ public class SinglyLinkedList<T> {
         while (curr.Next != null) curr = curr.Next;
         curr.Next = new SinglyLinkedListNode<T>(data);
     }
+    
+    public void Reverse() {
+        SinglyLinkedListNode<T>? prev = null;
+        SinglyLinkedListNode<T>? current = Head;
+        SinglyLinkedListNode<T>? next = null;
+        while (current != null) {
+            next = current.Next;
+            current.Next = prev;
+            prev = current;
+            current = next;
+        }
+        Head = prev;
+    }
+    
+    public bool HasCycle() {
+        if (Head == null) return false;
+        SinglyLinkedListNode<T>? slow = Head;
+        SinglyLinkedListNode<T>? fast = Head;
+        while (fast != null && fast.Next != null) {
+            slow = slow!.Next;
+            fast = fast.Next.Next;
+            if (ReferenceEquals(slow, fast)) return true;
+        }
+        return false;
+    }
 }
 
 public class DoublyLinkedListNode<T> {

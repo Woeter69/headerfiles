@@ -13,6 +13,8 @@ public:
     LinkedList();
     void insert(int val);
     void print() const;
+    void reverse();
+    bool hasCycle() const;
 };
 
 struct DListNode {

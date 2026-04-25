@@ -78,3 +78,42 @@ void free_deque(Deque* q) {
     free_doubly(q->front);
     free(q);
 }
+
+CircularQueue* create_circular_queue(int capacity) {
+    CircularQueue* q = (CircularQueue*)malloc(sizeof(CircularQueue));
+    q->data = (int*)malloc(sizeof(int) * capacity);
+    q->front = 0;
+    q->rear = -1;
+    q->size = 0;
+    q->capacity = capacity;
+    return q;
+}
+
+int cq_is_full(CircularQueue* q) {
+    return q->size == q->capacity;
+}
+
+int cq_is_empty(CircularQueue* q) {
+    return q->size == 0;
+}
+
+int cq_enqueue(CircularQueue* q, int val) {
+    if (cq_is_full(q)) return 0;
+    q->rear = (q->rear + 1) % q->capacity;
+    q->data[q->rear] = val;
+    q->size++;
+    return 1;
+}
+
+int cq_dequeue(CircularQueue* q) {
+    if (cq_is_empty(q)) return -1;
+    int val = q->data[q->front];
+    q->front = (q->front + 1) % q->capacity;
+    q->size--;
+    return val;
+}
+
+void free_circular_queue(CircularQueue* q) {
+    free(q->data);
+    free(q);
+}

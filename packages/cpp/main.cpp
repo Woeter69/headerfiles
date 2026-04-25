@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include "LinkedList.hpp"
 #include "Stack.hpp"
 #include "Queue.hpp"
@@ -15,7 +16,11 @@ int main() {
     LinkedList ll;
     ll.insert(1);
     ll.insert(2);
-    ll.print();
+    ll.insert(3);
+    std::cout << "Original: "; ll.print();
+    ll.reverse();
+    std::cout << "Reversed: "; ll.print();
+    std::cout << "Has Cycle: " << (ll.hasCycle() ? "Yes" : "No") << "\n";
 
     std::cout << "--- Testing DoublyLinkedList ---\n";
     DoublyLinkedList dll;
@@ -28,6 +33,10 @@ int main() {
     s.push(1);
     s.push(2);
     std::cout << "Top: " << s.top() << "\n";
+    std::string parens = "{[()]}";
+    std::cout << "Valid Parentheses '" << parens << "': " << (isValidParentheses(parens) ? "Yes" : "No") << "\n";
+    std::string bad_parens = "{[(])}";
+    std::cout << "Valid Parentheses '" << bad_parens << "': " << (isValidParentheses(bad_parens) ? "Yes" : "No") << "\n";
 
     std::cout << "--- Testing Queue ---\n";
     Queue q;
@@ -40,6 +49,16 @@ int main() {
     dq.push_front(1);
     dq.push_back(2);
     std::cout << "Back: " << dq.back() << "\n";
+
+    std::cout << "--- Testing CircularQueue ---\n";
+    CircularQueue cq(3);
+    cq.enQueue(1);
+    cq.enQueue(2);
+    cq.enQueue(3);
+    std::cout << "Is Full: " << (cq.isFull() ? "Yes" : "No") << "\n";
+    cq.deQueue();
+    cq.enQueue(4);
+    std::cout << "Rear: " << cq.Rear() << "\n";
 
     std::cout << "--- Testing Heap ---\n";
     Heap minH;
@@ -60,6 +79,23 @@ int main() {
     bst.insert(3);
     bst.print();
 
+    std::cout << "--- Testing Trie ---\n";
+    Trie trie;
+    trie.insert("hello");
+    std::cout << "Search 'hello': " << (trie.search("hello") ? "Yes" : "No") << "\n";
+    std::cout << "StartsWith 'hel': " << (trie.startsWith("hel") ? "Yes" : "No") << "\n";
+    std::cout << "Search 'world': " << (trie.search("world") ? "Yes" : "No") << "\n";
+
+    std::cout << "--- Testing AVLTree ---\n";
+    AVLTree avl;
+    avl.insert(10);
+    avl.insert(20);
+    avl.insert(30);
+    avl.insert(40);
+    avl.insert(50);
+    avl.insert(25);
+    avl.print();
+
     std::cout << "--- Testing Graph ---\n";
     Graph g;
     g.addEdge(0, 1, 10);
@@ -72,9 +108,23 @@ int main() {
     std::cout << "--- Testing Sorting & Search ---\n";
     std::vector<int> arr = {5, 2, 9, 1, 5, 6};
     Sorting::heapSort(arr);
+    std::cout << "HeapSort: ";
     for (int x : arr) std::cout << x << " ";
     std::cout << "\n";
-    std::cout << "Binary Search for 5: " << Search::binarySearch(arr, 5) << "\n";
+
+    std::vector<int> arr2 = {10, 7, 8, 9, 1, 5};
+    Sorting::quickSort(arr2);
+    std::cout << "QuickSort: ";
+    for (int x : arr2) std::cout << x << " ";
+    std::cout << "\n";
+
+    std::vector<int> arr3 = {12, 11, 13, 5, 6, 7};
+    Sorting::mergeSort(arr3);
+    std::cout << "MergeSort: ";
+    for (int x : arr3) std::cout << x << " ";
+    std::cout << "\n";
+
+    std::cout << "Binary Search for 5 in HeapSort array: " << Search::binarySearch(arr, 5) << "\n";
     
     return 0;
 }

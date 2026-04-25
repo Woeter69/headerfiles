@@ -82,6 +82,30 @@ function LinkedList:Get(index)
     return curr.value
 end
 
+function LinkedList:Reverse()
+    local prev = nil
+    local curr = self.head
+    self.tail = self.head
+    while curr ~= nil do
+        local nextTemp = curr.next
+        curr.next = prev
+        prev = curr
+        curr = nextTemp
+    end
+    self.head = prev
+end
+
+function LinkedList:HasCycle()
+    local slow = self.head
+    local fast = self.head
+    while fast ~= nil and fast.next ~= nil do
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast then return true end
+    end
+    return false
+end
+
 -- --- Doubly Linked List ---
 local DoublyLinkedList = {}
 DoublyLinkedList.__index = DoublyLinkedList

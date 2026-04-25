@@ -26,4 +26,22 @@ public class MyStack<T> {
     public boolean isEmpty() {
         return top == null;
     }
+
+    public static boolean isValidParentheses(String s) {
+        MyStack<Character> stack = new MyStack<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            } else {
+                if (stack.isEmpty()) return false;
+                char top = stack.pop();
+                if ((c == ')' && top != '(') ||
+                    (c == '}' && top != '{') ||
+                    (c == ']' && top != '[')) {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
 }

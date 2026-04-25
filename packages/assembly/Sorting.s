@@ -3,7 +3,7 @@
 	.globl	bubble_sort
 	.type	bubble_sort, @function
 bubble_sort:
-.LFB0:
+.LFB11:
 	.cfi_startproc
 	cmpl	$1, %esi
 	jle	.L1
@@ -39,12 +39,12 @@ bubble_sort:
 .L1:
 	ret
 	.cfi_endproc
-.LFE0:
+.LFE11:
 	.size	bubble_sort, .-bubble_sort
 	.globl	selection_sort
 	.type	selection_sort, @function
 selection_sort:
-.LFB1:
+.LFB12:
 	.cfi_startproc
 	cmpl	$1, %esi
 	jle	.L21
@@ -90,12 +90,12 @@ selection_sort:
 	.cfi_restore 3
 	ret
 	.cfi_endproc
-.LFE1:
+.LFE12:
 	.size	selection_sort, .-selection_sort
 	.globl	insertion_sort
 	.type	insertion_sort, @function
 insertion_sort:
-.LFB2:
+.LFB13:
 	.cfi_startproc
 	cmpl	$1, %esi
 	jle	.L24
@@ -138,12 +138,12 @@ insertion_sort:
 .L24:
 	ret
 	.cfi_endproc
-.LFE2:
+.LFE13:
 	.size	insertion_sort, .-insertion_sort
 	.globl	my_heapify
 	.type	my_heapify, @function
 my_heapify:
-.LFB3:
+.LFB14:
 	.cfi_startproc
 	movl	%edx, %eax
 	leal	(%rdx,%rdx), %edx
@@ -196,12 +196,12 @@ my_heapify:
 .L42:
 	ret
 	.cfi_endproc
-.LFE3:
+.LFE14:
 	.size	my_heapify, .-my_heapify
 	.globl	heap_sort
 	.type	heap_sort, @function
 heap_sort:
-.LFB4:
+.LFB15:
 	.cfi_startproc
 	pushq	%r12
 	.cfi_def_cfa_offset 16
@@ -255,7 +255,261 @@ heap_sort:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE4:
+.LFE15:
 	.size	heap_sort, .-heap_sort
+	.globl	quick_sort
+	.type	quick_sort, @function
+quick_sort:
+.LFB17:
+	.cfi_startproc
+	cmpl	%edx, %esi
+	jl	.L63
+	ret
+.L63:
+	pushq	%r12
+	.cfi_def_cfa_offset 16
+	.cfi_offset 12, -16
+	pushq	%rbp
+	.cfi_def_cfa_offset 24
+	.cfi_offset 6, -24
+	pushq	%rbx
+	.cfi_def_cfa_offset 32
+	.cfi_offset 3, -32
+	movq	%rdi, %rbx
+	movl	%edx, %r12d
+	movslq	%edx, %rax
+	leaq	(%rdi,%rax,4), %r10
+	movl	(%r10), %r8d
+	leal	-1(%rsi), %ebp
+	movslq	%esi, %rcx
+	leaq	(%rdi,%rcx,4), %rax
+	subl	%esi, %edx
+	addq	%rcx, %rdx
+	leaq	(%rdi,%rdx,4), %rdi
+	jmp	.L57
+	.p2align 4
+.L56:
+	addq	$4, %rax
+	cmpq	%rdi, %rax
+	je	.L64
+.L57:
+	movl	(%rax), %edx
+	cmpl	%edx, %r8d
+	jle	.L56
+	addl	$1, %ebp
+	movslq	%ebp, %rcx
+	leaq	(%rbx,%rcx,4), %rcx
+	movl	(%rcx), %r9d
+	movl	%edx, (%rcx)
+	movl	%r9d, (%rax)
+	jmp	.L56
+.L64:
+	movslq	%ebp, %rax
+	leaq	4(%rbx,%rax,4), %rax
+	movl	(%rax), %edx
+	movl	(%r10), %ecx
+	movl	%ecx, (%rax)
+	movl	%edx, (%r10)
+	movl	%ebp, %edx
+	movq	%rbx, %rdi
+	call	quick_sort
+	leal	2(%rbp), %esi
+	movl	%r12d, %edx
+	movq	%rbx, %rdi
+	call	quick_sort
+	popq	%rbx
+	.cfi_def_cfa_offset 24
+	popq	%rbp
+	.cfi_def_cfa_offset 16
+	popq	%r12
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE17:
+	.size	quick_sort, .-quick_sort
+	.globl	merge_sort
+	.type	merge_sort, @function
+merge_sort:
+.LFB19:
+	.cfi_startproc
+	pushq	%r15
+	.cfi_def_cfa_offset 16
+	.cfi_offset 15, -16
+	pushq	%r14
+	.cfi_def_cfa_offset 24
+	.cfi_offset 14, -24
+	pushq	%r13
+	.cfi_def_cfa_offset 32
+	.cfi_offset 13, -32
+	pushq	%r12
+	.cfi_def_cfa_offset 40
+	.cfi_offset 12, -40
+	pushq	%rbp
+	.cfi_def_cfa_offset 48
+	.cfi_offset 6, -48
+	pushq	%rbx
+	.cfi_def_cfa_offset 56
+	.cfi_offset 3, -56
+	subq	$24, %rsp
+	.cfi_def_cfa_offset 80
+	movq	%rdi, (%rsp)
+	cmpl	%edx, %esi
+	jl	.L86
+.L65:
+	addq	$24, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 56
+	popq	%rbx
+	.cfi_def_cfa_offset 48
+	popq	%rbp
+	.cfi_def_cfa_offset 40
+	popq	%r12
+	.cfi_def_cfa_offset 32
+	popq	%r13
+	.cfi_def_cfa_offset 24
+	popq	%r14
+	.cfi_def_cfa_offset 16
+	popq	%r15
+	.cfi_def_cfa_offset 8
+	ret
+.L86:
+	.cfi_restore_state
+	movl	%esi, %ebx
+	movl	%edx, %ebp
+	subl	%esi, %edx
+	movl	%edx, %eax
+	shrl	$31, %eax
+	addl	%edx, %eax
+	sarl	%eax
+	movl	%eax, %r15d
+	movl	%eax, 8(%rsp)
+	leal	(%rax,%rsi), %r14d
+	movl	%r14d, 12(%rsp)
+	movl	%r14d, %edx
+	movq	%rdi, %r12
+	call	merge_sort
+	leal	1(%r14), %esi
+	movl	%ebp, %edx
+	movq	%r12, (%rsp)
+	movq	%r12, %rdi
+	call	merge_sort
+	addl	$1, %r15d
+	subl	%r14d, %ebp
+	movslq	%r15d, %rdi
+	salq	$2, %rdi
+	call	malloc@PLT
+	movq	%rax, %r13
+	movslq	%ebp, %r14
+	salq	$2, %r14
+	movq	%r14, %rdi
+	call	malloc@PLT
+	movq	%rax, %r12
+	movl	%r15d, %esi
+	salq	$2, %rsi
+	movslq	%ebx, %rdx
+	salq	$2, %rdx
+	movq	(%rsp), %rax
+	leaq	(%rax,%rdx), %rdi
+	movl	$0, %eax
+	.p2align 5
+.L67:
+	movl	(%rdi,%rax), %ecx
+	movl	%ecx, 0(%r13,%rax)
+	addq	$4, %rax
+	cmpq	%rsi, %rax
+	jne	.L67
+	testl	%ebp, %ebp
+	jle	.L78
+	movslq	12(%rsp), %rax
+	movq	(%rsp), %rdi
+	leaq	(%rdi,%rax,4), %rsi
+	movl	$0, %eax
+	.p2align 5
+.L69:
+	movl	4(%rsi,%rax), %ecx
+	movl	%ecx, (%r12,%rax)
+	addq	$4, %rax
+	cmpq	%rax, %r14
+	jne	.L69
+	movq	(%rsp), %rax
+	addq	%rax, %rdx
+	movl	$0, %ecx
+	movl	$0, %eax
+	jmp	.L72
+.L70:
+	movl	%esi, (%rdx)
+	addl	$1, %ecx
+.L71:
+	addl	$1, %ebx
+	addq	$4, %rdx
+	cmpl	%eax, %r15d
+	jle	.L79
+	cmpl	%ecx, %ebp
+	jle	.L79
+.L72:
+	movslq	%eax, %rsi
+	movl	0(%r13,%rsi,4), %edi
+	movslq	%ecx, %rsi
+	movl	(%r12,%rsi,4), %esi
+	cmpl	%esi, %edi
+	jg	.L70
+	movl	%edi, (%rdx)
+	addl	$1, %eax
+	jmp	.L71
+.L79:
+	cmpl	%eax, %r15d
+	jle	.L74
+.L68:
+	movl	%eax, %r8d
+	movl	8(%rsp), %esi
+	subl	%eax, %esi
+	cltq
+	leaq	0(%r13,%rax,4), %r9
+	movslq	%ebx, %rax
+	movq	(%rsp), %rdi
+	leaq	(%rdi,%rax,4), %rdi
+	movl	$0, %eax
+	addq	$1, %rsi
+	.p2align 4
+.L75:
+	movl	(%r9,%rax,4), %edx
+	movl	%edx, (%rdi,%rax,4)
+	addq	$1, %rax
+	cmpq	%rsi, %rax
+	jne	.L75
+	movl	8(%rsp), %eax
+	leal	1(%rbx,%rax), %ebx
+	subl	%r8d, %ebx
+.L74:
+	cmpl	%ecx, %ebp
+	jle	.L76
+	subl	%ecx, %ebp
+	salq	$2, %rbp
+	movslq	%ecx, %rcx
+	leaq	(%r12,%rcx,4), %rsi
+	movslq	%ebx, %rbx
+	movq	(%rsp), %rax
+	leaq	(%rax,%rbx,4), %rcx
+	movl	$0, %eax
+	.p2align 4
+.L77:
+	movl	(%rsi,%rax), %edx
+	movl	%edx, (%rcx,%rax)
+	addq	$4, %rax
+	cmpq	%rbp, %rax
+	jne	.L77
+.L76:
+	movq	%r13, %rdi
+	call	free@PLT
+	movq	%r12, %rdi
+	call	free@PLT
+	jmp	.L65
+.L78:
+	movl	$0, %ecx
+	movl	$0, %eax
+	jmp	.L68
+	.cfi_endproc
+.LFE19:
+	.size	merge_sort, .-merge_sort
 	.ident	"GCC: (GNU) 15.2.1 20260209"
 	.section	.note.GNU-stack,"",@progbits

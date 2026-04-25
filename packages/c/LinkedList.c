@@ -47,3 +47,27 @@ void free_doubly(DNode* head) {
         free(temp);
     }
 }
+
+SNode* reverse(SNode* head) {
+    SNode* prev = NULL;
+    SNode* current = head;
+    while (current != NULL) {
+        SNode* next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    return prev;
+}
+
+int has_cycle(SNode* head) {
+    if (!head || !head->next) return 0;
+    SNode* slow = head;
+    SNode* fast = head;
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) return 1;
+    }
+    return 0;
+}

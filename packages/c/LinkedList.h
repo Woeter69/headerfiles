@@ -20,4 +20,7 @@ DNode* insert_doubly(DNode* head, int val);
 void print_doubly(DNode* head);
 void free_doubly(DNode* head);
 
+SNode* reverse(SNode* head);
+int has_cycle(SNode* head);
+
 #endif

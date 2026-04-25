@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 class Stack {
     std::vector<int> data;
@@ -9,3 +10,5 @@ public:
     int top() const;
     bool isEmpty() const;
 };
+
+bool isValidParentheses(const std::string& s);

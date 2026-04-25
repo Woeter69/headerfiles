@@ -118,3 +118,56 @@ pub fn Deque(comptime T: type) type {
         }
     };
 }
+
+pub fn CircularQueue(comptime T: type) type {
+    return struct {
+        items: []T,
+        head: usize,
+        tail: usize,
+        count: usize,
+        capacity: usize,
+        allocator: Allocator,
+
+        const Self = @This();
+
+        pub fn init(allocator: Allocator, capacity: usize) !Self {
+            const items = try allocator.alloc(T, capacity);
+            return Self{
+                .items = items,
+                .head = 0,
+                .tail = 0,
+                .count = 0,
+                .capacity = capacity,
+                .allocator = allocator,
+            };
+        }
+
+        pub fn deinit(self: *Self) void {
+            self.allocator.free(self.items);
+        }
+
+        pub fn enqueue(self: *Self, item: T) bool {
+            if (self.count == self.capacity) return false;
+            self.items[self.tail] = item;
+            self.tail = (self.tail + 1) % self.capacity;
+            self.count += 1;
+            return true;
+        }
+
+        pub fn dequeue(self: *Self) ?T {
+            if (self.count == 0) return null;
+            const item = self.items[self.head];
+            self.head = (self.head + 1) % self.capacity;
+            self.count -= 1;
+            return item;
+        }
+
+        pub fn isFull(self: *Self) bool {
+            return self.count == self.capacity;
+        }
+
+        pub fn isEmpty(self: *Self) bool {
+            return self.count == 0;
+        }
+    };
+}
